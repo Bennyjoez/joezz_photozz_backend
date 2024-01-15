@@ -13,13 +13,11 @@ app.use(requestTime)
 
 app.use(express.json());
 
-// app.get('/', (req, res) => {
-//   res.status(200).json({
-//     status: 'Success',
-//     message: 'Hello there from the server Benny!'
-//   });
-// })
-
+// reviews route
 app.use('/api/v1/reviews', reviewsRouter)
 
+// default route
+app.get('*', (req, res) => {
+  res.status(404).send('Check the route and try again!! 🔴')
+})
 module.exports = app;
