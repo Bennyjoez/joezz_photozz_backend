@@ -1,10 +1,13 @@
+const Review = require('../models/reviewsModel');
+
 const getAllReviews = async (req, res) => {
   try {
-
+    const reviews = await Review.find();
     // SEND RESPONSE
     res.status(200).json({
       status: 'Success',
-      message: 'Reviews retrieved'
+      results: reviews.length,
+      data: reviews,
     });
   } catch (err) {
     console.log('Something went wrong');
