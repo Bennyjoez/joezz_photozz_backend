@@ -18,6 +18,24 @@ const getAllReviews = async (req, res) => {
   }
 }
 
+const getReview = async (req, res) => {
+  try {
+    const id = req.params
+    const review = await Review.findById(req.params.id);
+
+    // SEND RESPONSE
+    res.status(201).json({
+      status: 'Success',
+      message: review,
+    });
+  } catch (err) {
+    res.status(404).json({
+      status: 'Fail',
+      message: err.message
+    }) 
+  }
+}
+
 const addReview = async(req, res) => {
   try {
     // add a review
@@ -38,5 +56,6 @@ const addReview = async(req, res) => {
 
 module.exports = {
   getAllReviews,
+  getReview,
   addReview
 }
