@@ -38,12 +38,12 @@ const getReview = async (req, res) => {
 
 const addReview = async(req, res) => {
   try {
-    // add a review
-
+    // create a review
+    const review = await Review.create(req.body);
     // SEND RESPONSE
     res.status(201).json({
       status: 'Success',
-      message: 'Review added'
+      message: review
     });
   } catch (err) {
     console.log('Something went wrong');
