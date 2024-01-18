@@ -14,6 +14,14 @@ const schema = new mongoose.Schema({
     required: [true, "A contact is needed"],
     unique: true,
   },
+  event: {
+    type: String,
+    required: [true, "Is it a wedding? What is it?"]
+  },
+  location: {
+    type: String,
+    required: [true, "Where will we report for the event"]
+  },
   reservationDate: {
     type: Date,
     required: [true, "Need a date to reserve"],
