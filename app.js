@@ -4,6 +4,7 @@ const app = express();
 // routes
 const reviewsRouter = require('./routes/reviewsRoutes');
 const authenticationRouter = require("./routes/authenticationRoutes");
+const bookingsRouter = require('./routes/bookingsRoutes');
 
 const requestTime = function (req, res, next) {
   req.requestTime = Date.now()
@@ -17,6 +18,7 @@ app.use(express.json());
 // reviews route
 app.use('/api/v1/reviews', reviewsRouter);
 app.use('/api/v1/users', authenticationRouter);
+app.use('/api/v1/bookings', bookingsRouter);
 
 // default route
 app.get('*', (req, res) => {
