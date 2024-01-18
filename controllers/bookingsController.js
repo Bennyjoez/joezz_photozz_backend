@@ -18,7 +18,21 @@ const getAllBookings = async (req, res) => {
 }
 
 const addBooking = async (req, res) => {
-
+  try {
+    // create a booking
+    const booking = await Booking.create(req.body);
+    // SEND RESPONSE
+    res.status(201).json({
+      status: 'Success',
+      message: booking
+    });
+  } catch (err) {
+    console.log('Something went wrong');
+    res.status(404).json({
+      status: 'Fail',
+      message: err.message
+    }) 
+  }
 }
 
 module.exports = { getAllBookings, addBooking }
