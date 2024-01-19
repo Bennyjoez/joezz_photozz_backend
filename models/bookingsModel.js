@@ -1,9 +1,9 @@
 const mongoose = require('mongoose');
 
 const schema = new mongoose.Schema({
-  clientName: {
+  clientId: {
     type: String,
-    required: [true, "A client's name is needed"]
+    required: [true, "A booking should be related"]
   },
   email: {
     type: String,
