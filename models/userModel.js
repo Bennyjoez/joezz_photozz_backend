@@ -9,7 +9,16 @@ const schema = new mongoose.Schema({
   password:{
     type: String,
     required: [true, "A password is necessary."]
-  }
+  },
+  email: {
+    type: String,
+    required: [true, 'A correspondence email is needed']
+  },
+  contact: {
+    type: String, 
+    required: [true, "A contact is needed"],
+    unique: true,
+  },
 })
 
 const User = mongoose.model("User", schema);
