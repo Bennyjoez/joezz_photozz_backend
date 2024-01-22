@@ -2,7 +2,8 @@ const Booking = require("../models/bookingsModel");
 
 const getAllBookings = async (req, res) => {
   try {
-    const bookings = await Booking.find();
+    // get all bookings with client data
+    const bookings = await Booking.find().populate('client');
     // SEND RESPONSE
     res.status(200).json({
       status: 'Success',
