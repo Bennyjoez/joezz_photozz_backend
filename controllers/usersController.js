@@ -3,6 +3,13 @@ const User = require('../models/userModel');
 
 const registerUser = async (req, res) => {
   try {
+    let { email } = req.body;
+    // check if user exists
+    const oldUser = await User.findOne({ email });
+    if (oldUser) {
+      return res.status(409).send({ error: 'User with specified email already exists!' });
+    }
+
     const saltRounds = 10;
     const salt = await bcrypt.genSalt(saltRounds);
     const password = await bcrypt.hash(req.body.password, salt);
