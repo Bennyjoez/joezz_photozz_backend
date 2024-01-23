@@ -1,6 +1,11 @@
 const express = require('express');
 const app = express();
+const morgan = require('morgan');
+const cors = require('cors');
 
+if (process.env.NODE_ENV === 'development') {
+  app.use(morgan('dev')); //logs requests to the console e.g. GET /img/favicon.png 200 6.047 ms - 12789
+}
 // routes
 const reviewsRouter = require('./routes/reviewsRoutes');
 const authenticationRouter = require("./routes/authenticationRoutes");
@@ -12,6 +17,7 @@ const requestTime = function (req, res, next) {
 }
 
 app.use(requestTime)
+app.use(cors());
 
 app.use(express.json());
 
