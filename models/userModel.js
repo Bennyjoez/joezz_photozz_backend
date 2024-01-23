@@ -3,7 +3,6 @@ const mongoose = require('mongoose');
 const schema = new mongoose.Schema({
   name: {
     type: String,
-    unique: true,
     required: [true, "A name is needed!"],
   },
   password:{
@@ -12,7 +11,8 @@ const schema = new mongoose.Schema({
   },
   email: {
     type: String,
-    required: [true, 'A correspondence email is needed']
+    required: [true, 'A correspondence email is needed'],
+    unique: true
   },
   contact: {
     type: String, 
