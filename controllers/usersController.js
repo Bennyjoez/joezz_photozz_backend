@@ -33,19 +33,19 @@ const registerUser = async (req, res) => {
 const loginUser = async (req, res) => {
   try {
     // verify login
-    const userName = req.body.name;
-    const { name, password} = await User.findOne().where('name').equals(userName);
+    const userEmail = req.body.email;
+    const {password} = await User.findOne().where('email').equals(userEmail);
 
     const compare = await bcrypt.compare(req.body.password, password);
-    if(compare) {
+    if(!compare) {
       // No response for this
-      res.status(204).send();
+      return res.status(400).send({ error: 'Check your email and password and try again!'});
     }
+    res.status(204).send();
   } catch (err) {
-    console.log(err);
-    res.status(404).json({
+    res.status(500).json({
       status: "Fail",
-      message: err.message,
+      message: err,
     })
   }
 }
