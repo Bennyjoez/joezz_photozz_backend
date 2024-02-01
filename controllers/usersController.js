@@ -3,17 +3,28 @@ const User = require('../models/userModel');
 
 const registerUser = async (req, res) => {
   try {
-    let { email } = req.body;
+    let { email, password } = req.body;
     // check if user exists
     const oldUser = await User.findOne({ email });
     if (oldUser) {
-      return res.status(409).send({ error: 'User with specified email already exists!' });
+      return res.status(409).send({
+        status: 'Failed to register user',
+        message: 'User with specified email already exists!',
+      });
+    }
+    // check the length of the password
+    if (password.length < 6) {
+      console.log(password)
+      return res.status(400).json({
+        status: 'Failed to register user',
+        message: 'Password must be at least 6 characters long',
+      });
     }
 
     const saltRounds = 10;
     const salt = await bcrypt.genSalt(saltRounds);
-    const password = await bcrypt.hash(req.body.password, salt);
-    const info = {...req.body, password};
+    const hashedPassword = await bcrypt.hash(password, salt);
+    const info = {...req.body, hashedPassword};
     await User.create(info);
 
     res.status(201).json({
@@ -24,7 +35,7 @@ const registerUser = async (req, res) => {
     console.log(err);
     res.status(500).json({
       status: 'Failed to register user',
-      message: err,
+      message: err.message,
     });
   }
 };
@@ -43,9 +54,10 @@ const loginUser = async (req, res) => {
     }
     res.status(204).send();
   } catch (err) {
+    console.log(err);
     res.status(500).json({
-      status: "Fail",
-      message: err,
+      status: "Failed to Login user",
+      message: err.message,
     })
   }
 }
