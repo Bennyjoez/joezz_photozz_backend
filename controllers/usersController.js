@@ -21,13 +21,7 @@ const handleErrors = (err) => {
 
 const registerUser = async (req, res) => {
   try {
-    let { password } = req.body;
-
-    const saltRounds = 10;
-    const salt = await bcrypt.genSalt(saltRounds);
-    const hashedPassword = await bcrypt.hash(password, salt);
-    const info = {...req.body, password: hashedPassword};
-    await User.create(info);
+    await User.create(req.body);
 
     res.status(201).json({
       status: 'Success',
