@@ -12,7 +12,7 @@ const handleErrors = (err) => {
     console.log(err)
     errors = {
       code: err.code,
-      message: `The ${Object.keys(err.keyValue)[0].toUpperCase()} is already taken`
+      message: `That ${Object.keys(err.keyValue)[0].toUpperCase()} is already taken`
     }
   }
 
