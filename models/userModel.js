@@ -7,12 +7,14 @@ const schema = new mongoose.Schema({
   },
   password:{
     type: String,
-    required: [true, "A password is necessary."]
+    required: [true, "A password is necessary."],
+    minLength: 6
   },
   email: {
     type: String,
     required: [true, 'A correspondence email is needed'],
-    unique: true
+    unique: true,
+    lowercase: true
   },
   contact: {
     type: String, 
