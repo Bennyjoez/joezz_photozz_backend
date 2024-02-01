@@ -10,17 +10,10 @@ const DB = process.env.DATABASE.replace(
   process.env.DATABASE_PASSWORD,
 );
 
-connect();
-
-async function connect() {
-  try {
-    await mongoose.connect(DB); // await is used because auth is enabled
+mongoose.connect(DB)
+  .then((result) => {
     console.log('DB connection successful');
-  } catch (err) {
-    console.log()
-  }
-}
-
-app.listen(port, () => {
-  console.log(`App listening on port ${port}`)
-})
+    app.listen(port);
+    console.log(`App listening on port ${port}`)
+  })
+  .catch((err) => console.log(err));
