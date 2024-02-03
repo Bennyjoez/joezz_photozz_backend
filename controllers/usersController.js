@@ -6,7 +6,8 @@ const handleErrors = (err) => {
 
   if(err.message.includes('User validation failed')) {
     Object.values(err.errors).forEach(({ properties }) => {
-      errors[properties.path] = properties.message
+      // errors[properties.path] = properties.message
+      errors.message = properties.message
     })
   } else if(err.message.includes('duplicate key error')) {
     console.log(err)
@@ -21,7 +22,9 @@ const handleErrors = (err) => {
 
 const registerUser = async (req, res) => {
   try {
-    await User.create(req.body);
+    const user = await User.create(req.body);
+
+    res.cookie('user', true);
 
     res.status(201).json({
       status: 'Success',
