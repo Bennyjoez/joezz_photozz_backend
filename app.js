@@ -33,9 +33,13 @@ app.use('/api/v1/reviews', reviewsRouter);
 app.use('/api/v1/users', authenticationRouter);
 app.use('/api/v1/bookings', bookingsRouter);
 
-// default route
-app.get('*', (req, res) => {
-  res.status(404).send('Check the route and try again!! 🔴')
+// default route(post, get, put)
+app.all('*', (req, res, next) => {
+  console.log(req)
+  res.status(404).json({
+    status: 'Fail',
+    message: `Cannot find ${req.originalUrl}. Check the route and try again!! 🔴`
+  })
 })
 
 // global error handler
