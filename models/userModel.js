@@ -30,9 +30,7 @@ schema.pre('save', async function (next) {
   if (!this.isModified('password')) return next();
   let { password } = this;
 
-  const saltRounds = 10;
-  const salt = await bcrypt.genSalt(saltRounds);
-  this.password = await bcrypt.hash(password, salt);
+  this.password = await bcrypt.hash(password, 12);
 
   next()
 }) 
