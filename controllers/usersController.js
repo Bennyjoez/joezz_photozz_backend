@@ -22,7 +22,13 @@ const handleErrors = (err) => {
 
 const registerUser = async (req, res) => {
   try {
-    const user = await User.create(req.body);
+    const {name, email, contact, password} = req.body;
+    const user = await User.create({
+      name,
+      email,
+      contact,
+      password
+    });
 
     res.cookie('user', true);
 
