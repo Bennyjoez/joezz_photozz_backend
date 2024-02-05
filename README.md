@@ -35,11 +35,9 @@
 
 <!-- PROJECT DESCRIPTION -->
 
-# 📖 [your_project_name] <a name="about-project"></a>
+# 📖 [Joez_Photozz_Backend] <a name="about-project"></a>
 
-> Describe your project in 1 or 2 sentences.
-
-**[your_project__name]** is a...
+**[Joez_Photozz_Backend]** is a backend api created with Node.JS(Express) and MongoDB. The biggest challenge I faced was determining the best way to authenticate a user, prevent CSRF attacks and maintain the privacy of users data.
 
 ## 🛠 Built With <a name="built-with"></a>
 
