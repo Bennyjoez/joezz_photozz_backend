@@ -27,6 +27,7 @@ const schema = new mongoose.Schema({
 })
 
 schema.pre('save', async function (next) {
+  if (!this.isModified('password')) return next();
   let { password } = this;
 
   const saltRounds = 10;
