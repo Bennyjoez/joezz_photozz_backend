@@ -91,4 +91,9 @@ const loginUser = async (req, res) => {
   }
 }
 
-module.exports = { registerUser, loginUser };
+const protect = (req, res, next) => {
+  console.log('Protecting');
+  next();
+}
+
+module.exports = { registerUser, loginUser, protect };
