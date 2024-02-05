@@ -10,7 +10,8 @@ const schema = new mongoose.Schema({
   password:{
     type: String,
     required: [true, "A password is necessary."],
-    minlength: [6, 'Minimum password length is 6 characters']
+    minlength: [6, 'Minimum password length is 6 characters'],
+    select: false
   },
   email: {
     type: String,
@@ -34,6 +35,10 @@ schema.pre('save', async function (next) {
 
   next()
 }) 
+
+schema.methods.correctPassword = async function(candidatePassword, userPassword) {
+  return await bcrypt.compare(candidatePassword, userPassword)
+}
 
 const User = mongoose.model("User", schema);
 
