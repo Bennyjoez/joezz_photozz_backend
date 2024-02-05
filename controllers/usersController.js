@@ -21,15 +21,19 @@ const handleErrors = (err) => {
   return errors;
 } 
 
+const signToken = (data) => {
+  return jwt.sign({ id: data}, process.env.JWT_SECRET, {
+    expiresIn: process.env.JWT_EXPIRES_IN
+  })
+}
+
 const registerUser = async (req, res) => {
   try {
     const {name, email, contact, password} = req.body;
     const user = await User.create({ name, email, contact, password });
 
     // create a token
-    const token = jwt.sign({ id: user._id}, process.env.JWT_SECRET, {
-      expiresIn: process.env.JWT_EXPIRES_IN
-    })
+    const token = signToken(user._id);
 
     res.status(201).json({
       status: 'Success',
@@ -51,29 +55,34 @@ const registerUser = async (req, res) => {
 const loginUser = async (req, res) => {
   try {
     // verify login
-    const userEmail = req.body.email.toLowerCase();
-    const user = await User.findOne().where('email').equals(userEmail);
-    
-    if ( !user ) {
+    const { email, password } = req.body;
+    if ( !email || !password ) {
       return res.status(400).send({
         status: 'Failed to login user',
         error: {
-          message: `This email(${userEmail}) is not recognized`
+          message: "Please provide email and password!"
         } 
       });
     }
-    const { password } = user;
 
-    const compare = await bcrypt.compare(req.body.password, password);
-    if(!compare) {
-      return res.status(400).send({
+    // const user = await User.findOne().where('email').equals(email);
+    const user = await User.findOne({ email }).select('+password');
+    
+    if(!user || !(await user.correctPassword(password, user.password))) {
+      return res.status(401).send({
         status: 'Failed to login user',
         error: {
-          message: 'Check your password and try again!'
+          message: 'Incorrect email or password!'
         }
       });
     }
-    res.status(204).send();
+
+    const token = signToken(user._id);
+    // send successful response
+    res.status(200).json({
+      status: 'Success',
+      token
+    });
   } catch (err) {
     console.log(err);
     res.status(500).json({
