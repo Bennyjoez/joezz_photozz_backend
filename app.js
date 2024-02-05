@@ -30,7 +30,9 @@ app.use(express.json());
 
 // reviews route
 app.use('/api/v1/reviews', reviewsRouter);
+// authentication route
 app.use('/api/v1/users', authenticationRouter);
+// bookings route
 app.use('/api/v1/bookings', bookingsRouter);
 
 // default route(post, get, put)
