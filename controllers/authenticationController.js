@@ -92,7 +92,23 @@ const loginUser = async (req, res) => {
 }
 
 const protect = (req, res, next) => {
-  console.log('Protecting');
+  // get token and check if it is there
+  let token;
+  if(req.headers.authorization && req.headers.authorization.startsWith('Bearer')) {
+    token = req.headers.authorization.split(' ')[1];
+  }
+
+  if(!token) {
+    return res.status(401).json({
+      status: 'Fail',
+      message: 'You are not logged in! Please log in to get access.'
+    })
+  }
+  // verification of token
+
+  // check if user still exists
+
+  // check if user changed password
   next();
 }
 

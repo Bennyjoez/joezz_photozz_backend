@@ -20,7 +20,7 @@ const authenticationRouter = require("./routes/authenticationRoutes");
 const bookingsRouter = require('./routes/bookingsRoutes');
 
 const requestTime = function (req, res, next) {
-  req.requestTime = Date.now()
+  req.requestTime = Date.now();
   next()
 }
 
