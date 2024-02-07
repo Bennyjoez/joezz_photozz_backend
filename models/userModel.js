@@ -25,6 +25,7 @@ const schema = new mongoose.Schema({
     required: [true, "A contact is needed"],
     unique: true,
   },
+  passwordChangedAt: Date
 })
 
 schema.pre('save', async function (next) {
@@ -38,6 +39,17 @@ schema.pre('save', async function (next) {
 
 schema.methods.correctPassword = async function(candidatePassword, userPassword) {
   return await bcrypt.compare(candidatePassword, userPassword)
+}
+
+schema.methods.changedPasswordAfter = async function(JWTTimestamp) {
+  if(this.passwordChangedAt) {
+    const changedTimestamp = parseInt(this.passwordChangedAt.getTime() / 1000, 10);
+    // if time changed = true
+    return changedTimestamp > JWTTimestamp;
+  }
+
+  // if time changed = false
+  return false;
 }
 
 const User = mongoose.model("User", schema);

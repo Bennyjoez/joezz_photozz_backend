@@ -29,8 +29,8 @@ const signToken = (data) => {
 
 const registerUser = async (req, res) => {
   try {
-    const {name, email, contact, password} = req.body;
-    const user = await User.create({ name, email, contact, password });
+    const {name, email, contact, password, passwordChangedAt } = req.body;
+    const user = await User.create({ name, email, contact, password, passwordChangedAt });
 
     // create a token
     const token = signToken(user._id);
@@ -108,15 +108,37 @@ const protect = async (req, res, next) => {
   // verification of token
   try {
     const decoded = await promisify(jwt.verify)(token, process.env.JWT_SECRET);
+
+    // check if user still exists
+    const freshUser = await User.findById(decoded.id);
+    if(!freshUser) {
+      return res.status(401).json({
+        status: 'Unauthorized',
+        error: {
+          message: 'The user of this token no longer exists!'
+        }
+      })
+    }
+
+    // check if user changed password
+    if(await freshUser.changedPasswordAfter(decoded.iat)) {
+      return res.status(401).json({
+        status: 'Unauthorized',
+        error: {
+          message: 'User recently changed the password. Please log in again!'
+        }
+      })
+    };
+
+    req.user = freshUser;
   } catch(err) {
     return res.status(401).json({
       status: 'Unauthorized',
       error: err
     })
   }
-  // check if user still exists
 
-  // check if user changed password
+  // Grant access to protected router
   next();
 }
 
