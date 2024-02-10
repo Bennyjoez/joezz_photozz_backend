@@ -51,7 +51,6 @@ const registerUser = async (req, res) => {
   }
 };
 
-
 const loginUser = async (req, res) => {
   try {
     // verify login
@@ -90,6 +89,23 @@ const loginUser = async (req, res) => {
       message: err.message,
     })
   }
+}
+
+const resetPassword = async (req, res) => {
+  // find the said profile
+  const user = await User.find({email: req.body.email});
+  // send a code to said email
+  
+  // use sent code to login the first time
+
+  // prompt the user to change the password to a desired password
+
+  // save the new password
+  console.log('called reset password', user)
+  return res.status(201).json({
+    status: 'Success',
+    message: "Password Reset!"
+  })
 }
 
 const protect = async (req, res, next) => {
@@ -142,4 +158,4 @@ const protect = async (req, res, next) => {
   next();
 }
 
-module.exports = { registerUser, loginUser, protect };
+module.exports = { registerUser, loginUser, resetPassword, protect };
