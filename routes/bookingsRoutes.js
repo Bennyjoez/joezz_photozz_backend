@@ -4,6 +4,6 @@ const { protect } = require('../controllers/authenticationController');
 
 const router = express.Router();
 
-router.route('/').get(protect, getAllBookings).post(addBooking)
+router.route('/').get(protect, getAllBookings).post(protect, addBooking)
 
 module.exports = router;

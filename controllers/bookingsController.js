@@ -21,7 +21,8 @@ const getAllBookings = async (req, res) => {
 const addBooking = async (req, res) => {
   try {
     // create a booking
-    const booking = await Booking.create(req.body);
+    const client = req.user._id;
+    const booking = await Booking.create({ ...req.body, client});
     // SEND RESPONSE
     res.status(201).json({
       status: 'Success',
