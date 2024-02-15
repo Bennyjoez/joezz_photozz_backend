@@ -9,6 +9,8 @@ const handleErrors = (err) => {
       code: err.code,
       message: `That ${Object.keys(err.keyValue)[0].toUpperCase()} is already taken`
     }
+  } else {
+    return err
   }
 
   return errors;
@@ -16,7 +18,7 @@ const handleErrors = (err) => {
 
 const getAllReviews = async (req, res) => {
   try {
-    const reviews = await Review.find();
+    const reviews = await Review.find().populate('reviewer');
     // SEND RESPONSE
     res.status(200).json({
       status: 'Success',
@@ -34,16 +36,16 @@ const getAllReviews = async (req, res) => {
 
 const addReview = async(req, res) => {
   try {
-    console.log(req)
+    const reviewer = req.user._id;
     // create a review
-    const review = await Review.create(req.body);
+    const review = await Review.create({ ...req.body, reviewer});
     // SEND RESPONSE
     res.status(201).json({
       status: 'Success',
       message: review
     });
   } catch (err) {
-    const errors = await handleErrors(err);
+    const errors = handleErrors(err);
     res.status(404).json({
       status: 'Fail',
       errors

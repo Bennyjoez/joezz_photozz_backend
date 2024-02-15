@@ -1,13 +1,14 @@
-const mongoose = require('mongoose')
+const mongoose = require('mongoose');
+const User = require('./userModel');
 const schema = new mongoose.Schema({
-  name: {
-    type: String,
-    unique: true,
-    required: [true, 'A name is needed for a review!']
+  reviewer: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: 'User'
   },
   comment: {
     type: String,
-    required: [true, "A review comment is needed."]
+    required: [true, "A review comment is needed."],
+    unique: false
   },
   rating: {
     type: Number,
