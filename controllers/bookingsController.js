@@ -3,7 +3,10 @@ const Booking = require("../models/bookingsModel");
 const getAllBookings = async (req, res) => {
   try {
     // get all bookings with client data
-    const bookings = await Booking.find().populate('client');
+    const bookings = await Booking.find().populate({ 
+      path: 'client',
+      select: 'name'
+    });
     // SEND RESPONSE
     res.status(200).json({
       status: 'Success',

@@ -18,7 +18,10 @@ const handleErrors = (err) => {
 
 const getAllReviews = async (req, res) => {
   try {
-    const reviews = await Review.find().populate('reviewer');
+    const reviews = await Review.find().populate({ 
+      path: 'reviewer',
+      select: 'name'
+    });
     // SEND RESPONSE
     res.status(200).json({
       status: 'Success',
