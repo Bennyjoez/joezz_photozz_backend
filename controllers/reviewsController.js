@@ -1,5 +1,19 @@
 const Review = require('../models/reviewsModel');
 
+const handleErrors = (err) => {
+  let errors = {};
+
+  if(err.message.includes('duplicate key error')) {
+    console.log(err)
+    errors = {
+      code: err.code,
+      message: `That ${Object.keys(err.keyValue)[0].toUpperCase()} is already taken`
+    }
+  }
+
+  return errors;
+} 
+
 const getAllReviews = async (req, res) => {
   try {
     const reviews = await Review.find();
@@ -20,6 +34,7 @@ const getAllReviews = async (req, res) => {
 
 const addReview = async(req, res) => {
   try {
+    console.log(req)
     // create a review
     const review = await Review.create(req.body);
     // SEND RESPONSE
@@ -28,10 +43,10 @@ const addReview = async(req, res) => {
       message: review
     });
   } catch (err) {
-    console.log('Something went wrong');
+    const errors = await handleErrors(err);
     res.status(404).json({
       status: 'Fail',
-      message: err.message
+      errors
     }) 
   }
 }
