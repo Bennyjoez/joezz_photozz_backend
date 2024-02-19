@@ -40,7 +40,7 @@ const addMessage = async (req, res) => {
     })
   } catch (error) {
     const errors = handleErrors(error);
-    res.status(404).json({
+    res.status(400).json({
       status: 'Fail',
       errors
     }) 
