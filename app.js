@@ -18,6 +18,7 @@ if (process.env.NODE_ENV === 'development') {
 const reviewsRouter = require('./routes/reviewsRoutes');
 const authenticationRouter = require("./routes/authenticationRoutes");
 const bookingsRouter = require('./routes/bookingsRoutes');
+const messagesRouter = require('./routes/messagesRoutes');
 
 const requestTime = function (req, res, next) {
   req.requestTime = Date.now();
@@ -34,6 +35,8 @@ app.use('/api/v1/reviews', reviewsRouter);
 app.use('/api/v1/users', authenticationRouter);
 // bookings route
 app.use('/api/v1/bookings', bookingsRouter);
+// messages route
+app.use('/api/v1/messages', messagesRouter);
 
 // default route(post, get, put)
 app.all('*', (req, res, next) => {
