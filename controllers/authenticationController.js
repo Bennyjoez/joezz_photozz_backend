@@ -35,10 +35,17 @@ const registerUser = async (req, res) => {
     // create a token
     const token = signToken(user._id);
 
+    const filteredUser = {
+      id: user._id,
+      name: user.name,
+      email: user.email,
+      contact: user.contact
+    }
+
     res.status(201).json({
       status: 'Success',
       token,
-      data: { user },
+      data: { user: filteredUser },
       message: 'User registered!',
     });
   } catch (err) {
@@ -77,10 +84,18 @@ const loginUser = async (req, res) => {
     }
 
     const token = signToken(user._id);
+
+    const filteredUser = {
+      id: user._id,
+      name: user.name,
+      email: user.email,
+      contact: user.contact
+    }
     // send successful response
     res.status(200).json({
       status: 'Success',
-      token
+      // token,
+      user: filteredUser
     });
   } catch (err) {
     console.log(err);
