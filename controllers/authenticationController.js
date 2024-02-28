@@ -94,7 +94,7 @@ const loginUser = async (req, res) => {
     // send successful response
     res.status(200).json({
       status: 'Success',
-      // token,
+      token,
       user: filteredUser
     });
   } catch (err) {
