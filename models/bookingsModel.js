@@ -19,6 +19,9 @@ const schema = new mongoose.Schema({
     type: String,
     required: [true, "Where will we report for the event"]
   },
+  message: {
+    type: String,
+  }
 })
 
 const Booking = mongoose.model('Booking', schema);
