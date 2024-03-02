@@ -1,5 +1,18 @@
 const Booking = require("../models/bookingsModel");
 
+const handleErrors = (err) => {
+  let errors = {};
+
+  if(err.message.includes('duplicate key error')) {
+    errors = {
+      code: err.code,
+      message: `The date is already reserved. Choose a different date`
+    }
+  }
+
+  return errors;
+} 
+
 const getAllBookings = async (req, res) => {
   try {
     // get all bookings with client data
@@ -32,11 +45,11 @@ const addBooking = async (req, res) => {
       message: booking
     });
   } catch (err) {
-    console.log('Something went wrong');
+    const errors = handleErrors(err);
     res.status(404).json({
       status: 'Fail',
-      message: err.message
-    }) 
+      errors
+    })
   }
 }
 
