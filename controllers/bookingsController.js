@@ -34,6 +34,25 @@ const getAllBookings = async (req, res) => {
   }
 }
 
+const getBookingsById = async (req, res) => {
+  try {
+    const userId = req.params.id;
+    // get all bookings for a give Id
+    const bookings = await Booking.find().where('client').equals(userId);
+    // SEND RESPONSE
+    res.status(200).json({
+      status: 'Success',
+      results: bookings.length,
+      data: bookings,
+    });
+  } catch (err) {
+    res.status(404).json({
+      status: 'Fail',
+      message: err.message
+    }) 
+  }
+}
+
 const addBooking = async (req, res) => {
   try {
     // create a booking
@@ -53,4 +72,4 @@ const addBooking = async (req, res) => {
   }
 }
 
-module.exports = { getAllBookings, addBooking }
+module.exports = { getAllBookings, getBookingsById, addBooking }

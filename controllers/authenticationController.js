@@ -39,14 +39,14 @@ const registerUser = async (req, res) => {
       id: user._id,
       name: user.name,
       email: user.email,
-      contact: user.contact,
-      userToken: token
+      contact: user.contact
     }
 
     res.status(201).json({
       status: 'Success',
-      data: { user: filteredUser },
       message: 'User registered!',
+      token,
+      user: filteredUser,
     });
   } catch (err) {
     console.log(err);
@@ -89,12 +89,12 @@ const loginUser = async (req, res) => {
       id: user._id,
       name: user.name,
       email: user.email,
-      contact: user.contact,
-      userToken: token
+      contact: user.contact
     }
     // send successful response
     res.status(200).json({
       status: 'Success',
+      token,
       user: filteredUser
     });
   } catch (err) {
