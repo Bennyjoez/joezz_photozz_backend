@@ -61,7 +61,7 @@ const addBooking = async (req, res) => {
     // SEND RESPONSE
     res.status(201).json({
       status: 'Success',
-      message: booking
+      booking
     });
   } catch (err) {
     const errors = handleErrors(err);
