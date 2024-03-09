@@ -172,6 +172,14 @@ Example:
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
+<!-- Challenges -->
+## Challenges faced so far
+<p>During my solo project developing a MERN stack photography booking application, I encountered difficulties implementing Nodemailer for email notifications. Despite thorough research and following documentation, configuring the mailing system proved challenging. To ensure users were informed of successful bookings, I pivoted to a user-friendly solution by integrating toast notifications directly into the application's interface. These notifications provided immediate feedback upon booking confirmation, enhancing the user experience without relying on external email communication.</p>
+
+<p>Additionally, recognizing the importance of user accessibility, I expanded the user profile section to include a comprehensive list of bookings. By consolidating this feature within the user profile, users could conveniently manage their photography sessions within the application.</p>
+
+<p>This adaptive approach, tailored to the project's solo nature, underscored my commitment to prioritizing user experience and finding innovative solutions to technical challenges. Despite working alone, I remained focused on delivering a seamless and intuitive application for users, demonstrating my ability to overcome obstacles and achieve project goals independently.</p>
+
 <!-- AUTHORS -->
 
 ## 👥 Authors <a name="authors"></a>
