@@ -3,14 +3,14 @@ const Review = require('../models/reviewsModel');
 const handleErrors = (err) => {
   let errors = {};
 
-  if(err.message.includes('duplicate key error')) {
-    console.log(err)
+  if (err.message.includes('duplicate key error')) {
+    console.error(err);
     errors = {
       code: err.code,
       message: `That ${Object.keys(err.keyValue)[0].toUpperCase()} is already taken`
     }
   } else {
-    return err
+    return new Error('Internal server error');
   }
 
   return errors;
@@ -18,10 +18,7 @@ const handleErrors = (err) => {
 
 const getAllReviews = async (req, res) => {
   try {
-    const reviews = await Review.find().populate({ 
-      path: 'reviewer',
-      select: 'name'
-    });
+    const reviews = await Review.find();
     // SEND RESPONSE
     res.status(200).json({
       status: 'Success',
@@ -39,13 +36,14 @@ const getAllReviews = async (req, res) => {
 
 const addReview = async(req, res) => {
   try {
-    const reviewer = req.user._id;
+    const reviewer = req.user.name;
+    console.log(req.user, "user")
     // create a review
     const review = await Review.create({ ...req.body, reviewer});
     // SEND RESPONSE
     res.status(201).json({
       status: 'Success',
-      message: review
+      message: "Review added!"
     });
   } catch (err) {
     const errors = handleErrors(err);
