@@ -15,7 +15,9 @@ const schema = new mongoose.Schema({
     default: 4.5,
     required: [true, "A rating would be nice."]
   },
-  date: {type: Date, default: Date.now()},
+  date: {
+    type: Date, default: Date.now()
+  },
 })
 
 const Review = mongoose.model('Review', schema);
