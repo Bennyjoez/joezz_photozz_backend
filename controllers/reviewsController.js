@@ -37,15 +37,18 @@ const getAllReviews = async (req, res) => {
 const addReview = async(req, res) => {
   try {
     const reviewer = req.user.name;
-    console.log(req.user, "user")
     // create a review
-    const review = await Review.create({ ...req.body, reviewer});
+    const review = await Review.create({
+      ...req.body,
+      comment: req.body.message,
+      reviewer});
     // SEND RESPONSE
     res.status(201).json({
       status: 'Success',
       message: "Review added!"
     });
   } catch (err) {
+    console.log(err);
     const errors = handleErrors(err);
     res.status(404).json({
       status: 'Fail',
