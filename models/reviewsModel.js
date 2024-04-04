@@ -10,7 +10,7 @@ const schema = new mongoose.Schema({
     unique: false
   },
   rating: {
-    type: Number,
+    type: String,
     default: 4.5,
     required: [true, "A rating would be nice."]
   },
