@@ -73,6 +73,10 @@ const addBooking = async (req, res) => {
 };
 
 const deleteBookingById = async (req, res) => {
+  //TODO: Instead of deleting the booking, mark it as canceled or completed
+  // - The user can cancel a booking using a button
+  // - The user may/may not have access to the canceled bookings. Canceled bookings marked in red. completed bookings in green.
+  // - An admin can see all bookings(active, canceled and completed)
   try {
     //  find the target
     const { id } = req.params;
